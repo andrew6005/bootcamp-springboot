@@ -18,6 +18,20 @@ public class UserController {
     @PostMapping("/register")
     public String register(@RequestBody RegisterRequest request) {
 
+        if (request.getUsername() == null || request.getUsername().trim().isEmpty()) {
+            return "Username cannot be null or empty";
+        }
+
+        if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
+            return "Password cannot be null or empty";
+        }
+
+        
+
+        if (request.getPassword().length() < 8) {
+            return "Password must be at least 8 characters";
+        }
+
         if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             return "Username already exists";
         }
@@ -34,6 +48,20 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
+
+        if (request.getUsername() == null || request.getUsername().trim().isEmpty()) {
+            return "Username cannot be null or empty";
+        }
+
+        if (request.getPassword() == null || request.getPassword().trim().isEmpty()) {
+            return "Password cannot be null or empty";
+        }
+
+     
+
+        if (request.getPassword().length() < 8) {
+            return "Password must be at least 8 characters";
+        }
 
         Userentity user = userRepository.findByUsername(request.getUsername())
                 .orElse(null);
