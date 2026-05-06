@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CartitemEntity {
+public class CartItemEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY) // serial, auto_increment
   private Long id;
