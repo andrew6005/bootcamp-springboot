@@ -1,39 +1,55 @@
 package com.bootcampspring.demo_call_api.entity;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import org.springframework.web.bind.annotation.PostMapping;
-import com.bootcampspring.demo_call_api.dto.ForumUserDto;
-import com.bootcampspring.demo_call_api.service.ForumService;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
+@Entity
 public class UserEntity {
-  private ForumService forumService;
- @PostMapping(value = "/DB")
-  public List<ForumUserDto> postser() {
 
-    return this.forumService.getUsers().stream() //
-        .map(e -> {
-          return ForumUserDto.builder() //
-              .email(e.getEmail()) //
-              .phone(e.getPhone()) //
-              .username(e.getUsername()) //
-              .build();
-        }).collect(Collectors.toList());
-  }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  @PostMapping(value = "/DB")
-  public List<ForumUserDto> getter() {
+    private String email;
+    private String phone;
+    private String username;
 
-    return this.forumService.getUsers().stream() //
-        .map(e -> {
-          return ForumUserDto.builder() //
-              .email(e.getEmail()) //
-              .phone(e.getPhone()) //
-              .username(e.getUsername()) //
-              .build();
-        }).collect(Collectors.toList());
-  }
+    public UserEntity() {
+    }
 
+    public UserEntity(String email, String phone, String username) {
+        this.email = email;
+        this.phone = phone;
+        this.username = username;
+    }
 
+    public Long getId() {
+        return id;
+    }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }
