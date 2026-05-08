@@ -1,20 +1,45 @@
 package com.bootcampspring.demo_call_api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.*;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class UserDto {
+  private Long id;
+  private String name;
+  private String username;
+  private String email;
+  @JsonProperty(value = "address")
+  private AddressDto addressDto;
+  private String phone;
+  private String website;
+  @JsonProperty(value = "company")
+  private CompanyDto companyDto;
 
-    private String email;
-    private String phone;
-    private String username;
+  @Getter
+  public static class AddressDto {
+    private String street;
+    private String suite;
+    private String city;
+    private String zipcode;
+    @JsonProperty(value = "geo") // Json Naming
+    private GeoDto geoDto; // Java Naming
 
-    public String getEmail() {
-        return email;
+    @Getter
+    public static class GeoDto {
+      private String lat;
+      private String lng;
     }
+  }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public String getUsername() {
-        return username;
-    }
+  @Getter
+  public static class CompanyDto {
+    private String name;
+    private String catchPhrase;
+    private String bs;
+  }
 }

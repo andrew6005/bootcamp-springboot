@@ -1,0 +1,8 @@
+package com.bootcampspring.demo_call_api.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.bootcampspring.demo_call_api.entity.AddressEntity;
+
+public interface AddressRepository extends JpaRepository<AddressEntity, Long> {
+
+}

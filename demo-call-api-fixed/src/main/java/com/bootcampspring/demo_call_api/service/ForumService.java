@@ -3,9 +3,11 @@ package com.bootcampspring.demo_call_api.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
 import com.bootcampspring.demo_call_api.entity.AddressEntity;
 import com.bootcampspring.demo_call_api.entity.CompanyEntity;
 import com.bootcampspring.demo_call_api.entity.GeoEntity;
@@ -20,72 +22,69 @@ import com.bootcampspring.demo_call_api.repository.UserRepository;
 public class ForumService {
   @Autowired
   private UserRepository userRepository;
+
   @Autowired
   private AddressRepository addressRepository;
+
   @Autowired
   private CompanyRepository companyRepository;
+
   @Autowired
   private GeoRepository geoRepository;
 
   public List<UserDto> getUsers() {
     RestTemplate restTemplate = new RestTemplate();
     String url = "https://jsonplaceholder.typicode.com/users";
-    // ! Deserialization (反序列化) - List = Array (json -> [])
-    // Json String -> Java Object (List or Object)
-    UserDto[] userDtos = restTemplate.getForObject(url, UserDto[].class); // RestFul GET
+    UserDto[] userDtos = restTemplate.getForObject(url, UserDto[].class);
     return Arrays.asList(userDtos);
   }
 
-  // database
   public List<UserEntity> insertUsers() {
     RestTemplate restTemplate = new RestTemplate();
     String url = "https://jsonplaceholder.typicode.com/users";
     UserDto[] userDtos = restTemplate.getForObject(url, UserDto[].class);
-    // Clear First
+
     this.geoRepository.deleteAll();
     this.addressRepository.deleteAll();
     this.companyRepository.deleteAll();
     this.userRepository.deleteAll();
 
-    // array of dto -> list of entity
     List<UserEntity> userEntities = new ArrayList<>();
-    for (UserDto dto : userDtos) {
-      UserEntity userEntity = UserEntity.builder() //
-          .username(dto.getUsername()) //
-          .name(dto.getName()) //
-          .email(dto.getEmail()) //
-          .phone(dto.getPhone()) //
-          .website(dto.getWebsite()) //
-          .build();
 
-      AddressEntity addressEntity = AddressEntity.builder() //
-          .street(dto.getAddressDto().getStreet()) //
-          .suite(dto.getAddressDto().getSuite()) //
-          .city(dto.getAddressDto().getCity()) //
-          .zipcode(dto.getAddressDto().getZipcode()) //
-          .build();
+    for (UserDto dto : userDtos) {
+      UserEntity userEntity = new UserEntity();
+      userEntity.setUsername(dto.getUsername());
+      userEntity.setName(dto.getName());
+      userEntity.setEmail(dto.getEmail());
+      userEntity.setPhone(dto.getPhone());
+      userEntity.setWebsite(dto.getWebsite());
+
+      AddressEntity addressEntity = new AddressEntity();
+      addressEntity.setStreet(dto.getAddressDto().getStreet());
+      addressEntity.setSuite(dto.getAddressDto().getSuite());
+      addressEntity.setCity(dto.getAddressDto().getCity());
+      addressEntity.setZipcode(dto.getAddressDto().getZipcode());
       addressEntity.setUserEntity(userEntity);
 
-      GeoEntity geoEntity = GeoEntity.builder() //
-          .latitude(Double.valueOf(dto.getAddressDto().getGeoDto().getLat())) //
-          .longitude(Double.valueOf(dto.getAddressDto().getGeoDto().getLng())) //
-          .build();
+      GeoEntity geoEntity = new GeoEntity();
+      geoEntity.setLatitude(Double.valueOf(dto.getAddressDto().getGeoDto().getLat()));
+      geoEntity.setLongitude(Double.valueOf(dto.getAddressDto().getGeoDto().getLng()));
       geoEntity.setAddressEntity(addressEntity);
 
-      CompanyEntity companyEntity = CompanyEntity.builder() //
-          .name(dto.getCompanyDto().getName()) //
-          .catchPhrase(dto.getCompanyDto().getCatchPhrase()) //
-          .bs(dto.getCompanyDto().getName()) //
-          .build();
+      CompanyEntity companyEntity = new CompanyEntity();
+      companyEntity.setName(dto.getCompanyDto().getName());
+      companyEntity.setCatchPhrase(dto.getCompanyDto().getCatchPhrase());
+      companyEntity.setBs(dto.getCompanyDto().getBs());
       companyEntity.setUserEntity(userEntity);
-      // Insert Into Database
+
       this.userRepository.save(userEntity);
       this.addressRepository.save(addressEntity);
       this.companyRepository.save(companyEntity);
       this.geoRepository.save(geoEntity);
+
       userEntities.add(userEntity);
     }
+
     return userEntities;
   }
-
 }
