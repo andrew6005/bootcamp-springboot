@@ -1,5 +1,6 @@
 package com.bootcampspring.demo_call_api.controller;
 
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootcampspring.demo_call_api.dto.ForumUserDto;
 import com.bootcampspring.demo_call_api.entity.UserEntity;
+
 import com.bootcampspring.demo_call_api.repository.UserRepository;
 import com.bootcampspring.demo_call_api.service.ForumService;
 
@@ -36,6 +38,18 @@ public class ForumController {
                 ))
                 .collect(Collectors.toList());
     }
+    // List<ForumUserDto> forumUserDtos = new ArrayList<>();
+    // List<UserDto> userDtos = this.forumService.getUsers(); 
+    // for(UserDto userDto :userDtos){
+    //     ForumUserDto forumUserDto = ForumUserDto.builder()
+    //     .getEmail(userDto.getEmail())
+    //     .phone(userDto.getPhone())
+    //     .username(userDto.getUsername())
+    //     .build();
+    //     forumUserDtos.add(forumUserDto);
+
+    // }
+    // return forumUserDtos
 
 
 
