@@ -32,10 +32,13 @@ public class ForumService {
   @Autowired
   private GeoRepository geoRepository;
 
+  @Autowired
+  private RestTemplate restTemplate;
+
   public List<UserDto> getUsers() {
-    RestTemplate restTemplate = new RestTemplate();
+    //RestTemplate restTemplate = new RestTemplate();
     String url = "https://jsonplaceholder.typicode.com/users";
-    UserDto[] userDtos = restTemplate.getForObject(url, UserDto[].class);
+    UserDto[] userDtos = this.getForObject(url, UserDto[].class);
     return Arrays.asList(userDtos);
   }
 
