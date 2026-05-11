@@ -16,7 +16,7 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    // GET all posts
+
     public List<PostDto> getAllPosts() {
         return postRepository.findAll()
                 .stream()
@@ -24,7 +24,7 @@ public class PostService {
                 .toList();
     }
 
-    // GET posts by user id
+
     public List<PostDto> getPostsByUserId(Long userId) {
         return postRepository.findByUserId(userId)
                 .stream()
@@ -32,7 +32,7 @@ public class PostService {
                 .toList();
     }
 
-    // POST new post by user id
+
     public PostDto addPostByUserId(Long userId, PostEntity post) {
         post.setUserId(userId);
 
@@ -41,7 +41,7 @@ public class PostService {
         return entityToDto(savedPost);
     }
 
-    // DELETE post by id
+
     public void deletePostById(Long postId) {
         if (!postRepository.existsById(postId)) {
             throw new RuntimeException("Post not found");
@@ -50,7 +50,7 @@ public class PostService {
         postRepository.deleteById(postId);
     }
 
-    // Entity -> DTO
+  
     private PostDto entityToDto(PostEntity entity) {
         return new PostDto(
                 entity.getId(),
