@@ -1,10 +1,13 @@
 package com.bootcamp.bcforum.controller;
 
+import com.bootcamp.bcforum.dto.ApiResp;
 import com.bootcamp.bcforum.dto.CommentDto;
 import com.bootcamp.bcforum.dto.CommentsByUserDto;
 import com.bootcamp.bcforum.dto.UserDto;
 import com.bootcamp.bcforum.service.ForumService;
 import java.util.List;
+import com.bootcamp.bcforum.entity.PostEntity;
+import com.bootcamp.bcforum.repository.PostRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
