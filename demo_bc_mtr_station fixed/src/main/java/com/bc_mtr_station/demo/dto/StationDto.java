@@ -5,7 +5,7 @@ public class StationDto {
     private String stationCode;
 
     public StationDto() {
-    }
+    } 
 
     public StationDto(String lineCode, String stationCode) {
         this.lineCode = lineCode;
@@ -14,7 +14,7 @@ public class StationDto {
 
     public String getLineCode() {
         return lineCode;
-    }
+    } 
 
     public void setLineCode(String lineCode) {
         this.lineCode = lineCode;

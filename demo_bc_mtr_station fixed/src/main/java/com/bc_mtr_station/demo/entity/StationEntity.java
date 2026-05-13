@@ -2,6 +2,8 @@ package com.bc_mtr_station.demo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,6 +12,8 @@ import jakarta.persistence.Table;
 public class StationEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "station_code")
     private String stationCode;
 
@@ -19,9 +23,18 @@ public class StationEntity {
     public StationEntity() {
     }
 
-    public StationEntity(String lineCode, String stationCode) {
+    public StationEntity(Long id, String lineCode, String stationCode) {
+        this.id = id;
         this.lineCode = lineCode;
         this.stationCode = stationCode;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getLineCode() {
