@@ -1,23 +1,29 @@
 package com.bc_mtr_station.demo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestParam;
-import com.bc_mtr_station.demo.service.MtrResponseDto;
-import com.bc_mtr_station.demo.service.MtrService;
+import java.util.List;
+
+import org.springframework.web.bind.annotation.*;
+
+import com.bc_mtr_station.demo.dto.LineDto;
+import com.bc_mtr_station.demo.service.LineQueryService;
 
 @RestController
-public class MtrController {
+@RequestMapping("/mtr/lines")
+public class LineController {
 
-    private final MtrService mtrService;
+  private final LineQueryService lineQueryService;
 
-    public MtrController(MtrService mtrService) {
-        this.mtrService = mtrService;
-    }
+  public LineController(LineQueryService lineQueryService) {
+    this.lineQueryService = lineQueryService;
+  }
 
-    @GetMapping("/mtr/schedule")
-    public MtrResponseDto getSchedule(@RequestParam String line,
-                                      @RequestParam String sta) {
-        return mtrService.getSchedule(line, sta);
-    }
+  @GetMapping
+  public List<LineDto> getLines() {
+    return lineQueryService.getAllLines();
+  }
+
+  @GetMapping("/{lineCode}")
+  public LineDto getLine(@PathVariable String lineCode) {
+    return lineQueryService.getLine(lineCode);
+  }
 }
